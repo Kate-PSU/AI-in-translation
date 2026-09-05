@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#151547">
+  <title>Цифровой перевод — тренажёр</title>
+  <meta name="description" content="Интерактивный тренажёр по CAT, MT, NMT, TM, NLP и LLM.">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="В начало">
+        <span class="brand-mark" aria-hidden="true">A↔Б</span>
+        <span class="brand-copy">
+          <strong>Цифровой перевод</strong>
+          <small>интерактивный тренажёр</small>
+        </span>
+      </a>
+      <div class="view-controls" aria-label="Настройки отображения">
+        <button class="icon-button" id="sizeToggle" type="button" aria-label="Увеличить текст" title="Увеличить текст">
+          <span aria-hidden="true">Aa</span>
+        </button>
+        <button class="icon-button" id="fullscreenButton" type="button" aria-label="Полноэкранный режим" title="Полноэкранный режим">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1">
+      <section class="screen hero-screen" id="startScreen" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <p class="eyebrow">Лекция 1 · гибридный формат</p>
+          <h1 id="heroTitle">От аббревиатур<br><span>к осознанному выбору инструмента</span></h1>
+          <p class="hero-lead">20 коротких заданий: расшифровка, CAT или MT, сопоставление понятий, рабочие мини-кейсы и итоговая самопроверка.</p>
+          <div class="hero-actions">
+            <button class="button button-primary" id="startButton" type="button">
+              Начать тренировку <span aria-hidden="true">→</span>
+            </button>
+            <span class="duration">≈ 12 минут</span>
+          </div>
+        </div>
+
+        <aside class="topic-board" aria-label="Темы тренажёра">
+          <p class="board-kicker">6 ключевых понятий</p>
+          <div class="topic-grid">
+            <span class="topic-card coral">CAT</span>
+            <span class="topic-card mint">MT</span>
+            <span class="topic-card violet">NMT</span>
+            <span class="topic-card gold">TM</span>
+            <span class="topic-card sky">NLP</span>
+            <span class="topic-card pink">LLM</span>
+          </div>
+          <p class="board-note">Отвечайте по одному. После каждого ответа появятся корректный вариант и короткое объяснение.</p>
+        </aside>
+      </section>
+
+      <section class="screen quiz-screen hidden" id="quizScreen" aria-live="polite">
+        <div class="quiz-header">
+          <div>
+            <p class="eyebrow" id="stageLabel">Блок 1</p>
+            <h2 id="stageTitle">Аббревиатуры</h2>
+          </div>
+          <div class="score-chip" aria-label="Текущий результат">
+            <span id="scoreValue">0</span><small>баллов</small>
+          </div>
+        </div>
+
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span id="progressText">Задание 1 из 20</span>
+            <span id="progressPercent">5%</span>
+          </div>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="1" aria-label="Прогресс">
+            <span id="progressBar"></span>
+          </div>
+        </div>
+
+        <article class="question-card" id="questionCard">
+          <div class="question-number" id="questionNumber">01</div>
+          <p class="question-type" id="questionType">Выберите один ответ</p>
+          <h3 id="questionText"></h3>
+          <p class="question-hint hidden" id="questionHint"></p>
+          <div class="answers" id="answers" role="group" aria-labelledby="questionText"></div>
+          <div class="feedback hidden" id="feedback" tabindex="-1">
+            <div class="feedback-icon" id="feedbackIcon" aria-hidden="true"></div>
+            <div>
+              <strong id="feedbackTitle"></strong>
+              <p id="correctAnswer"></p>
+              <p id="feedbackExplanation"></p>
+            </div>
+          </div>
+          <div class="question-actions">
+            <button class="button button-primary" id="checkButton" type="button" disabled>Проверить</button>
+            <button class="button button-primary hidden" id="nextButton" type="button">Следующее <span aria-hidden="true">→</span></button>
+          </div>
+        </article>
+
+        <p class="keyboard-tip"><kbd>Enter</kbd> — проверить или перейти дальше</p>
+      </section>
+
+      <section class="screen result-screen hidden" id="resultScreen" aria-labelledby="resultTitle">
+        <div class="result-badge" id="resultBadge" aria-hidden="true">✓</div>
+        <p class="eyebrow">Тренировка завершена</p>
+        <h2 id="resultTitle">Результат готов</h2>
+        <p class="result-score"><strong id="finalScore">0</strong><span>/ 20</span></p>
+        <p class="result-message" id="resultMessage"></p>
+
+        <div class="result-stats" aria-label="Результаты по блокам" id="resultStats"></div>
+
+        <div class="result-actions">
+          <button class="button button-primary" id="retryErrorsButton" type="button">Повторить ошибки</button>
+          <button class="button button-secondary" id="restartButton" type="button">Пройти заново</button>
+        </div>
+        <p class="privacy-note">Результат хранится только в этом браузере и никуда не отправляется.</p>
+      </section>
+    </main>
+
+    <footer>
+      <span>Материалы курса · Лекция 1</span>
+      <span>CAT · MT · NMT · TM · NLP · LLM</span>
+    </footer>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
